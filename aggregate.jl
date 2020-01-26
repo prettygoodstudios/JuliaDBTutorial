@@ -1,4 +1,5 @@
 using JuliaDB
+using Statistics
 
 a = [x for x in 1:100]
 b = rand(1:1000, 100)
@@ -23,5 +24,26 @@ end
 println("Custom multiply function passed to reduce:")
 println(reduce(sum, t, select = :val)) 
 
+c = []
+
+for x in 1:100
+    if x < 30
+        push!(c, 1)
+    elseif x < 60
+        push!(c, 2)
+    else 
+        push!(c, 3)
+    end
+end
+
+t = table(a, b, c, names=[:id, :val, :type])
+
+# Example of using groupby 
+# The first parameter is the function applied to each aggregated row
+# The second parameter is the table
+# The third parameter is the column to group by
+# The select parameter selects the columns that get passed to the function
+println("Mean val for each type:")
+println(groupby(mean, t, :type, select=:val))
 
 
