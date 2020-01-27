@@ -35,3 +35,41 @@ println("Left Join:")
 println(join(t1, t2, how = :left))
 println("Left Join Switching Order of Tables:")
 println(join(t2, t1, how = :left))
+
+
+usernames = [
+    "John",
+    "Test0101",
+    "Sam"
+]
+
+ids = [
+    1,
+    2,
+    3
+]
+
+postcontents = [
+    "Hello World!",
+    "Hey, whats up!",
+    "Lorem Ipsum"
+]
+
+postids = [
+    23,
+    55,
+    34
+]
+
+postuserids = [
+    1,
+    3,
+    1
+]
+
+users = table(ids, usernames, names=[:id, :username], pkey=:id)
+posts = table(postids, postuserids, postcontents, names=[:id, :uid, :content], pkey=:id)
+
+
+println("Example of joining using columns other than private keys:")
+println(join(posts, users, lkey = :uid, rkey = :id, how = :left))
